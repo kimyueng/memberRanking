@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.system.mapper.RankMapper">
+  <resultMap id="BaseResultMap" type="com.smart.system.domain.entity.Rank">
+    <!--@mbg.generated-->
+    <!--@Table `rank`-->
+    <id column="rank_id" jdbcType="INTEGER" property="rankId" />
+    <result column="rank_name" jdbcType="VARCHAR" property="rankName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    rank_id, rank_name
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from `rank`
+    where rank_id = #{rankId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from `rank`
+    where rank_id = #{rankId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="rank_id" keyProperty="rankId" parameterType="com.smart.system.domain.entity.Rank" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `rank` (rank_name)
+    values (#{rankName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="rank_id" keyProperty="rankId" parameterType="com.smart.system.domain.entity.Rank" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into `rank`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rankName != null">
+        rank_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rankName != null">
+        #{rankName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.smart.system.domain.entity.Rank">
+    <!--@mbg.generated-->
+    update `rank`
+    <set>
+      <if test="rankName != null">
+        rank_name = #{rankName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rank_id = #{rankId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.smart.system.domain.entity.Rank">
+    <!--@mbg.generated-->
+    update `rank`
+    set rank_name = #{rankName,jdbcType=VARCHAR}
+    where rank_id = #{rankId,jdbcType=INTEGER}
+  </update>
+  <select id="selectRankById" resultMap="BaseResultMap">
+    SELECT *
+    FROM rank
+    where rank_id=#{rankId,jdbcType=INTEGER}
+
+  </select>
+
+</mapper>

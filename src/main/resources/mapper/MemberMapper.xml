@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.system.mapper.MemberMapper">
+    <resultMap id="BaseResultMap" type="com.smart.system.domain.entity.Member">
+        <id column="member_id" jdbcType="BIGINT" property="memberId"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result property="nickName" jdbcType="VARCHAR" column="nickname"/>
+        <result property="phone" jdbcType="VARCHAR" column="phone"/>
+        <result property="email" jdbcType="VARCHAR" column="email"/>
+        <result property="status" jdbcType="INTEGER" column="status"/>
+        <result property="createTime" jdbcType="TIMESTAMP" column="create_time"/>
+        <result property="updateTime" jdbcType="TIMESTAMP" column="update_time"/>
+        <result property="icon" jdbcType="VARCHAR" column="icon"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+
+        member_id, username, `password`, nickname, phone, email, `status`, create_time, update_time,
+        icon
+
+    </sql>
+    <select id="selectAll" resultMap="BaseResultMap">
+        Select * from member
+        <trim prefix="where" prefixOverrides="AND">
+            <if test="keyword != null">
+                AND ( username like concat('%',#{keyword} ,'%') or phone like concat('%', #{keyword}
+                ,'%')
+                or
+                email like concat('%', #{keyword} ,'%'))
+            </if>
+            <if test="createDate != null">
+                AND create_time between concat(#{createDate} ,' 00:00:00') and concat( #{createDate} ,'
+                23:59:59')
+            </if>
+        </trim>
+        limit #{limit}, #{offset}
+
+    </select>
+
+    <insert id="insert" keyColumn="member_id" keyProperty="memberId" parameterType="com.smart.system.domain.entity.Member">
+        insert into `member`(username, `password`, nickname,
+        phone, email, `status`,
+        create_time, update_time, icon
+        )
+        values (#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{nickName,jdbcType=VARCHAR},
+        #{phone,jdbcType=INTEGER},#{email,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{icon,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" keyColumn="member_id" keyProperty="memberId"
+            parameterType="com.smart.system.domain.entity.Member"  useGeneratedKeys="true">
+        insert into`member`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username!=null">
+                username,
+
+            </if>
+            <if test="password!=null">
+                `password`,
+            </if>
+            <if test="nickName!=null">
+                nickname,
+            </if>
+            <if test="phone!=null">
+                phone,
+            </if>
+            <if test="email!=null">
+                email,
+
+            </if>
+            <if test="status!=null">
+                status,
+
+            </if>
+            <if test="createTime!=null">
+                create_time,
+
+            </if>
+            <if test="updateTime!=null">
+                update_time,
+
+            </if>
+            <if test="icon!=null">
+                icon,
+
+            </if>
+
+
+        </trim>
+        <trim prefix="values(" suffix=")"  suffixOverrides=",">
+            <if test="username!=null">
+                #{username,jdbcType=VARCHAR}
+
+            </if>
+            <if test="password!=null">
+                #{password,jdbcType=VARCHAR}
+
+            </if>
+
+            <if test="nickname!=null">
+                #{nickName,jdbcType=VARCHAR}
+
+            </if>
+            <if test="phone!=null">
+                #{phone,jdbcType=INTEGER}
+
+            </if>
+            <if test="email!=null">
+                #{email,jdbcType=VARCHAR}
+
+            </if>
+            <if test="status!=null">
+                #{status,jdbcType=INTEGER}
+
+            </if>
+            <if test="createTime!=null">
+                #{createTime,jdbcType=TIMESTAMP}
+
+            </if>
+
+            <if test="updateTime!=null">
+                #{updateTime,jdbcType=TIMESTAMP}
+
+            </if>
+            <if test="icon!=null">
+                #{icon,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectByPrimaryKey"  parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from `member`
+        where member_id=#{memberId,jdbcType=BIGINT}
+
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.smart.system.domain.entity.Member">
+        update `member`
+        <set>
+            <if test="username != null">
+                username=#{username,jdbcType=VARCHAR}
+
+
+
+            </if>
+            <if test="_parameter != null">
+                `password`=#{password,jdbcType=VARCHAR},
+
+
+            </if>
+            <if test="nickName != null">
+                nickname = #{nickName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="icon != null">
+                icon = #{icon,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        Where member_id=#{icon,jdbcType=VARCHAR},
+
+
+    </update>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from `member`
+        where member_id=#{memberId,jdbcType=BIGINT}
+    </delete>
+
+
+</mapper>
